@@ -1,43 +1,123 @@
 # Housing Price Prediction
 
-This project involves building a machine learning model to predict housing prices based on various features such as median income, house age, number of rooms, and other related features. The workflow includes data preprocessing, model training, evaluation, and optimization.
+This project is a machine learning pipeline for predicting housing prices using the **California Housing dataset** from `sklearn.datasets`. The pipeline includes data loading, preprocessing, model training, hyperparameter tuning, evaluation, and logging.
 
-## Project Structure
+---
 
-- **`housing_price_prediction.py`**: Main script that runs the entire pipeline—loads data, preprocesses it, trains the model, evaluates it, and tunes the model's hyperparameters.
-- **`data_preprocessing.py`**: Handles the data cleaning, feature extraction, and splits the data into training and testing sets.
-- **`model_training.py`**: Trains the model (currently using a Random Forest Regressor), evaluates it, and calculates performance metrics (RMSE and R-squared).
-- **`model_tuning.py`**: Fine-tunes the model’s hyperparameters using techniques like Grid Search for optimal performance.
+## 📌 Project Structure
 
-## Requirements
+```
+housing_price_predict/
+│── logs/                     # Stores log files
+│── housing_price_prediction.py  # Main script
+│── data_processing.py         # Data preprocessing
+│── model_training.py          # Model training
+│── model_tuning.py            # Hyperparameter tuning
+│── model_evaluation.py        # Model evaluation
+│── logger.py                  # Logging setup
+│── README.md                  # Project documentation
+```
 
-- Python 3.x
-- pandas
-- numpy
-- scikit-learn
+---
 
-## How It Works
+## 🚀 Setup Instructions
 
-### Data Preprocessing (`data_preprocessing.py`):
-- Loads and cleans the dataset.
-- Extracts features and target labels from the data.
-- Splits the data into training and testing sets.
+### 1️⃣ Install Dependencies
 
-### Model Training and Evaluation (`model_training.py`):
-- Trains a `RandomForestRegressor` model using the preprocessed data.
-- Evaluates the model's performance on the test data.
-- Calculates RMSE (Root Mean Squared Error) and R-squared.
+Ensure you have Python installed, then run:
 
-### Model Tuning (`model_tuning.py`):
-- Uses Grid Search to tune hyperparameters for the model.
-- Finds the best configuration for improved model performance.
+```bash
+pip install -r requirements.txt
+```
 
-### Main Script (`housing_price_prediction.py`):
-- Calls the preprocessing function to prepare the data.
-- Trains and evaluates the model.
-- Optionally tunes the model's hyperparameters to further improve performance.
+### 2️⃣ Run the Pipeline
 
-## Output
+```bash
+python housing_price_prediction.py
+```
 
-- **RMSE (Root Mean Squared Error):** Indicates how far the model’s predictions are from the actual values. Lower values are better.
-- **R-squared:** Indicates how well the model fits the data. Higher values are better, with 1 indicating a perfect fit.
+---
+
+## 📜 Scripts Overview
+
+### `housing_price_prediction.py` (Main Script)
+- The entry point for the project.
+- Calls all other scripts in the correct sequence.
+- Loads and preprocesses data.
+- Trains an initial model and evaluates it.
+- Performs hyperparameter tuning to improve the model.
+- Runs final evaluation and logs results.
+
+---
+
+### `data_processing.py` (Data Preprocessing)
+- Loads the **California Housing dataset**.
+- Splits data into training and testing sets.
+- Normalizes features using **StandardScaler**.
+- Logs progress during data loading and preprocessing.
+
+---
+
+### `model_training.py` (Model Training)
+- Initializes a **RandomForestRegressor** model.
+- Uses a **progress bar** to visualize training.
+- Fits the model to the training data.
+- Generates predictions and evaluates performance using **RMSE and R² score**.
+- Logs key training results.
+
+---
+
+### `model_tuning.py` (Hyperparameter Tuning)
+- Uses a **grid search** approach to test different hyperparameters.
+- Trains multiple **RandomForestRegressor** models with varying settings.
+- Identifies the best model based on **RMSE and R² score**.
+- Logs the best model configuration.
+
+---
+
+### `model_evaluation.py` (Model Evaluation)
+- Uses the best model found in tuning.
+- Makes final predictions on test data.
+- Calculates **RMSE and R² score** for model performance.
+- Logs final evaluation results.
+
+---
+
+### `logger.py` (Logging Setup)
+- Initializes and configures a **color-coded logger**.
+- Ensures logs are formatted with timestamps and severity levels.
+- Prevents duplicate logs when importing the logger into multiple scripts.
+
+---
+
+## 🏆 Features
+
+✔ Uses **RandomForestRegressor** for predictions  
+✔ **Hyperparameter tuning** using `ParameterGrid`  
+✔ **Rich progress bars** for model training visualization  
+✔ **Colorful logging** with `colorlog`  
+✔ **Clean modular structure**  
+
+---
+
+## 📌 Requirements
+
+- Python 3.11+
+- Libraries: `scikit-learn`, `pandas`, `rich`, `colorlog`
+
+---
+
+## 📢 Future Improvements
+
+- Add **feature selection** for better performance.
+- Implement **cross-validation** for robust tuning.
+- Explore **other models** like Gradient Boosting.
+- Deploy model as a **REST API**.
+
+---
+
+## 📬 Contact
+
+For any issues or improvements, feel free to contribute or reach out.
+
+---
