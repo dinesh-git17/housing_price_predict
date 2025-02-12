@@ -1,22 +1,25 @@
-# housing_price_prediction.py
-
-from data_preprocessing import preprocess_data
+from logger import logger  # Import centralized logger
+from data_preprocessing import load_data
 from model_training import train_and_evaluate_model
 from model_tuning import tune_model
+from model_evaluation import evaluate_model
 
 def main():
-    # Step 1: Preprocess data
-    X_train, X_test, y_train, y_test = preprocess_data()
+    logger.info("📥 Loading dataset...")
+    X_train, X_test, y_train, y_test = load_data()
 
-    # Step 2: Train and evaluate the initial model
-    model, rmse, r2 = train_and_evaluate_model(X_train, X_test, y_train, y_test)
-    print(f"Initial Model RMSE: {rmse}")
-    print(f"Initial Model R-squared: {r2}")
+    logger.info("🚀 Training initial model...")
+    initial_model, initial_rmse, initial_r2 = train_and_evaluate_model(X_train, X_test, y_train, y_test)
 
-    # Step 3: Tune the model
+    logger.info(f"🏆 Initial Model Performance: RMSE={initial_rmse:.4f}, R²={initial_r2:.4f}")
+
+    logger.info("🔍 Performing hyperparameter tuning...")
     best_model, best_rmse, best_r2 = tune_model(X_train, y_train)
-    print(f"Best Model RMSE: {best_rmse}")
-    print(f"Best Model R-squared: {best_r2}")
+
+    logger.info(f"🏆 Best Model Performance: RMSE={best_rmse:.4f}, R²={best_r2:.4f}")
+
+    logger.info("✅ Model tuning complete! Evaluating final model...")
+    evaluate_model(best_model, X_test, y_test)
 
 if __name__ == "__main__":
     main()

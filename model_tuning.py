@@ -1,29 +1,25 @@
-# model_tuning.py
-
+import numpy as np
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import ParameterGrid
+from sklearn.metrics import mean_squared_error
+from logger import logger  # Import logger
 
 def tune_model(X_train, y_train):
-    # Set up the RandomForestRegressor
-    model = RandomForestRegressor()
+    param_grid = {'n_estimators': [50, 100], 'max_depth': [10, 20]}
+    best_rmse = float("inf")
+    best_model = None
 
-    # Define hyperparameters to tune
-    param_grid = {
-        'n_estimators': [100, 200],
-        'max_depth': [10, 20, None],
-        'min_samples_split': [2, 5],
-        'min_samples_leaf': [1, 2]
-    }
+    for params in ParameterGrid(param_grid):
+        logger.info(f"🔍 Testing parameters: {params}")
+        model = RandomForestRegressor(**params, random_state=42)
+        model.fit(X_train, y_train)
 
-    # Set up GridSearchCV
-    grid_search = GridSearchCV(estimator=model, param_grid=param_grid, cv=5, n_jobs=-1, verbose=2)
+        y_pred = model.predict(X_train)
+        rmse = mean_squared_error(y_train, y_pred) ** 0.5
 
-    # Fit the model
-    grid_search.fit(X_train, y_train)
+        if rmse < best_rmse:
+            best_rmse = rmse
+            best_model = model
 
-    # Get the best model and evaluation metrics
-    best_model = grid_search.best_estimator_
-    best_rmse = grid_search.best_score_
-    best_r2 = grid_search.best_estimator_.score(X_train, y_train)
-
-    return best_model, best_rmse, best_r2
+    logger.info(f"🏆 Best RMSE: {best_rmse:.4f}")
+    return best_model, best_rmse, 0
