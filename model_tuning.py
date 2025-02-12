@@ -1,25 +1,25 @@
-from tqdm import tqdm
-from sklearn.model_selection import GridSearchCV
+import numpy as np
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import ParameterGrid
+from sklearn.metrics import mean_squared_error
+from logger import logger  # Import logger
 
 def tune_model(X_train, y_train):
-    # Define the model
-    model = RandomForestRegressor()
+    param_grid = {'n_estimators': [50, 100], 'max_depth': [10, 20]}
+    best_rmse = float("inf")
+    best_model = None
 
-    # Define the parameter grid
-    param_grid = {
-        'n_estimators': [100, 200],
-        'max_depth': [10, 20],
-        'min_samples_split': [2, 5],
-        'min_samples_leaf': [1, 2],
-        'bootstrap': [True, False]
-    }
+    for params in ParameterGrid(param_grid):
+        logger.info(f"🔍 Testing parameters: {params}")
+        model = RandomForestRegressor(**params, random_state=42)
+        model.fit(X_train, y_train)
 
-    # Set up GridSearchCV with a progress bar
-    grid_search = GridSearchCV(estimator=model, param_grid=param_grid, cv=5, n_jobs=-1)
+        y_pred = model.predict(X_train)
+        rmse = mean_squared_error(y_train, y_pred) ** 0.5
 
-    # Wrap the fit method with tqdm to show a progress bar
-    # Use a tqdm loop to track the progress of the grid search
-    tqdm(grid_search.fit(X_train, y_train), desc="Grid Search Progress", total=grid_search.get_n_splits(), position=0)
+        if rmse < best_rmse:
+            best_rmse = rmse
+            best_model = model
 
-    return grid_search.best_estimator_
+    logger.info(f"🏆 Best RMSE: {best_rmse:.4f}")
+    return best_model, best_rmse, 0
