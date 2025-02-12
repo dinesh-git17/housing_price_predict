@@ -2,7 +2,8 @@ import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
 from rich.progress import Progress, BarColumn, TextColumn, TimeRemainingColumn
-from logger import logger  # Import logger
+from logger import logger
+import joblib
 
 def train_and_evaluate_model(X_train, X_test, y_train, y_test):
     logger.info("🚀 Starting model training...")
@@ -29,5 +30,10 @@ def train_and_evaluate_model(X_train, X_test, y_train, y_test):
 
     logger.info(f"🔢 RMSE: {rmse:.4f}")
     logger.info(f"📊 R² Score: {r2:.4f}")
+
+    # Save the trained model
+    model_filename = "random_forest_model.pkl"
+    joblib.dump(model, model_filename)
+    logger.info(f"💾 Model saved as {model_filename}")
 
     return model, rmse, r2

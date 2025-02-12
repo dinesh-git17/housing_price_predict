@@ -169,3 +169,9 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Ignore trained models
+*.pkl
+*.joblib
+model.pkl
+model.joblib
