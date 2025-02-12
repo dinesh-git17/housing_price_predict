@@ -12,7 +12,7 @@ if not logger.hasHandlers():
         "%(log_color)s%(asctime)s - %(levelname)s - %(message)s",
         log_colors={
             "DEBUG": "white",
-            "INFO": "cyan",
+            "INFO": "light_purple",
             "WARNING": "yellow",
             "ERROR": "red",
             "CRITICAL": "bold_red"
