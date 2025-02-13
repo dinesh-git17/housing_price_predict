@@ -1,5 +1,6 @@
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import mean_squared_error, r2_score
 from logger import logger
 from rich.progress import Progress, SpinnerColumn, TextColumn
 
@@ -31,7 +32,7 @@ def tune_model(X_train, y_train):
             model,
             param_grid,
             cv=5,  # 5-fold cross-validation
-            scoring="neg_mean_squared_error",
+            scoring="neg_mean_squared_error",  # Use negative MSE for scoring
             n_jobs=-1,  # Use all available CPU cores
             verbose=0
         )
@@ -39,10 +40,18 @@ def tune_model(X_train, y_train):
         # Fit the grid search
         grid_search.fit(X_train, y_train)
 
-    # Log the best parameters and score
-    logger.info(f"🏆 Best Parameters: {grid_search.best_params_}")
-    logger.info(f"🏆 Best Cross-validated RMSE: {(-grid_search.best_score_) ** 0.5:.4f}")
+    # Log the best parameters and validation set performance
+    best_model = grid_search.best_estimator_
+    best_params = grid_search.best_params_
+    best_rmse = (-grid_search.best_score_) ** 0.5  # RMSE on validation set
+
+    # Compute R² on the validation set
+    y_pred = best_model.predict(X_train)  # Predict on the training set (for validation)
+    best_r2 = r2_score(y_train, y_pred)
+
+    logger.info(f"🏆 Best Parameters: {best_params}")
+    logger.info(f"🏆 Best Cross-validated RMSE: {best_rmse:.4f}")
+    logger.info(f"🏆 Best Cross-validated R²: {best_r2:.4f}")
 
     # Return the best model and its performance metrics
-    best_model = grid_search.best_estimator_
-    return best_model, (-grid_search.best_score_) ** 0.5, 0
+    return best_model, best_rmse, best_r2
