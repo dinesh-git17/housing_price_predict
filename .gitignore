@@ -177,3 +177,5 @@ model.pkl
 model.joblib
 
 .DS_Store
+
+*.html
