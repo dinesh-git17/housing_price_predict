@@ -40,6 +40,7 @@ Key Components:
 
 Project Structure:
 ------------------
+```
 housing_price_predict/
 ├── logs/                         - Log files.
 ├── housing_price_prediction.py   - Main script with the unified menu.
@@ -54,7 +55,7 @@ housing_price_predict/
 ├── geoviz.py                     - Geospatial map generation using Folium.
 ├── app.py                        - Streamlit dashboard for interactive predictions.
 └── README.txt                    - This documentation file.
-
+```
 Setup Instructions:
 -------------------
 1. Install Dependencies:
