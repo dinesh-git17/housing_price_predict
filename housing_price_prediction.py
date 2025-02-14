@@ -34,6 +34,28 @@ def main():
         model = load_model("best_random_forest_model.pkl")  # Try loading existing model
 
         if model:
+            # Ask user if they want to use the saved model or retrain
+            choice = (
+                input(
+                    "A saved model is available. Do you want to use the saved model? (y/n): "
+                )
+                .strip()
+                .lower()
+            )
+            if choice != "y":
+                console.print(
+                    Panel.fit(
+                        Text(
+                            "Retraining new model as per user request.",
+                            style="bold red",
+                        ),
+                        title="Retrain Model",
+                        border_style="red",
+                    )
+                )
+                model = None
+
+        if model:
             console.print(
                 Panel.fit(
                     Text(
@@ -49,7 +71,7 @@ def main():
             console.print(
                 Panel.fit(
                     Text(
-                        "⚠️ No pre-trained model found. Training a new model...",
+                        "⚠️ No pre-trained model found or retraining requested. Training a new model...",
                         style="bold red",
                     ),
                     title="Training Required",
