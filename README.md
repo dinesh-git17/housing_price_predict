@@ -71,8 +71,4 @@ Contact:
 --------
 For questions, issues, or contributions, please open an issue or submit a pull request.
 
-License:
---------
-[Specify your license here]
-
 Thank you for exploring the Housing Price Prediction project!
