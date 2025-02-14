@@ -93,9 +93,3 @@ Future Enhancements:
 - Integrate model explainability tools (e.g., SHAP or LIME).
 - Enhance the user interface for both CLI and web-based interactions.
 - Set up CI/CD for automated testing and deployment.
-
-Contact:
---------
-For any issues, questions, or contributions, please open an issue or submit a pull request on GitHub.
-
-Thank you for using the Housing Price Prediction Project!
