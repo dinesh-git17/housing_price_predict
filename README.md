@@ -1,5 +1,5 @@
-Housing Price Prediction Project - README.txt
-=============================================
+Housing Price Prediction Project 
+=================================
 
 Overview:
 ---------
